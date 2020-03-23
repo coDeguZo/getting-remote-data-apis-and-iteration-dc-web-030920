@@ -53,3 +53,28 @@ end
 
 # that `get_character_movies_from_api` method is probably pretty long. Does it do more than one job?
 # can you split it up into helper methods?
+
+
+
+def get_movies_from_api(movies)
+  #make the web request
+  # response_string = RestClient.get('http://www.swapi.co/api/people/')
+  response_hash = return_response_hash('http://www.swapi.co/api/films/')
+  movie_info = response_hash["results"].find { |result| result["title"] == movies.strip}
+  movie_info
+end
+
+def print_movies_info(movie_hash)
+  # some iteration magic and puts out the movies in a nice list
+  puts "****************************"
+  puts "Title: #{movie_hash["title"]}"
+  puts "****************************"
+  puts "Director: #{movie_hash["director"]}"
+  puts "****************************"
+end
+
+def show_movies_info(movie)
+  puts "Searching for #{movie}"
+  movie_hash = get_movies_from_api(movie)
+  print_movies_info(movie_hash)
+end
